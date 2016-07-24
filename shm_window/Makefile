@@ -32,7 +32,7 @@ pixels: pixels.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 clean:
-	rm -f $(OBJ) $(BIN) *.o
+	rm -f $(OBJ) $(BIN) *.o pixels
 
 .PHONY: clean
 
