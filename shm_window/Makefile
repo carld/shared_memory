@@ -10,7 +10,6 @@ ifdef STATIC
 LDFLAGS  +=  $(shell sdl2-config --static-libs)
 else
 LDFLAGS  +=  $(shell sdl2-config --libs)
-#LDFLAGS  +=  -lGL -lm #-framework OpenGL
 endif
 
 CFLAGS   +=  $(shell sdl2-config --cflags)
@@ -28,7 +27,9 @@ BIN       =  shm_window
 
 $(BIN): $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
-	strip $@
+
+pixels: pixels.o
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 clean:
 	rm -f $(OBJ) $(BIN) *.o

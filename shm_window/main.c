@@ -13,7 +13,7 @@ unsigned height = 480;
 unsigned int frames = 0;
 unsigned int start_tick;
 
-#define NAME "shm_pixels"
+#define NAME "pixels"
 
 int main(int argc, char *argv[]) {
   SDL_Event ev;
@@ -24,9 +24,16 @@ int main(int argc, char *argv[]) {
   int fd = 0;
   void *pixels = 0;
 
-  if (shm_unlink(NAME) < 0) {
-    perror("shm_unlink");
-  }
+/*
+  printf("O_RDONLY %d \n", O_RDONLY);
+  printf("O_RDWR   %d \n", O_RDWR);
+  printf("S_IRUSR  %d \n", S_IRUSR);
+  printf("S_IWUSR  %d \n", S_IWUSR);
+  printf("PROT_READ %d \n", PROT_READ);
+  printf("PROT_WRITE %d \n", PROT_WRITE);
+  printf("MAP_SHARED %d \n", MAP_SHARED);
+*/
+  printf("creating buffer '%s'\n", NAME);
   fd = shm_open(NAME, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
   if (fd < 0) {
     perror("shm_open");
@@ -77,7 +84,9 @@ int main(int argc, char *argv[]) {
   SDL_DestroyWindow(window);
   SDL_Quit();
 
-  shm_unlink(NAME);
+  if (shm_unlink(NAME) < 0) {
+    perror("shm_unlink");
+  }
   munmap(pixels, width * height * 4);
   close(fd);
 
