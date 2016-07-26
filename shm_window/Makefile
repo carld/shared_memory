@@ -22,6 +22,8 @@ SRC       =  main.c
 OBJ       =  $(SRC:.c=.o)
 BIN       =  shm_window
 
+all: $(BIN) pixels
+
 %.o: %.c
 	$(CC) -c $(CFLAGS) $<
 
@@ -34,5 +36,5 @@ pixels: pixels.o
 clean:
 	rm -f $(OBJ) $(BIN) *.o pixels
 
-.PHONY: clean
+.PHONY: clean all
 
